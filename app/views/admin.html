@@ -1,0 +1,213 @@
+<div class="container-fluid whiteBg">
+    <header>
+        <nav class="navbar navbar-default admin-navbar">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#"><img src="../images/zingo-logo.png" alt="zingo-logo" title="zingo-logo" /></a>
+                </div>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <div class="container notification-blk">
+        <form>
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Notification" ng-model="notification" required>
+                <div class="input-group-btn">
+                    <button class="btn btn-success" type="submit">
+            <label ng-click="SendNotes()">Send Notification</label>
+          </button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="button-blk">
+        <div class="adminTimer" ng-if="eventList[0].event[currentEvent].eventStart">
+            <span ng-repeat="duration in quesDuration track by $index">
+
+                  <span ng-if="$index === quesDuration.length-1" ><timer countdown="duration" max-time-unit="'minute'" interval="1000" finish-callback="finishCallback()">{{hhours}}:{{mminutes}}:{{sseconds}}</timer></span>
+            </span>
+        </div>
+        <div class="adminTimer" ng-if="adminTime">
+
+
+            <timer countdown="0" max-time-unit="'minute'" interval="1000" finish-callback="finishCallback()">{{hhours}}:{{mminutes}}:{{sseconds}}</timer>
+        
+
+        </div>
+        <div class="gameOver animated infinite pulse" ng-if="FullHouseData.length >= 2"> Game Over</div>
+        <div class="Event" ng-show="StartEvent">
+            <button type="button" class="btn btn-success" ng-click="Event()">Start Game</button>
+        </div>
+        <div class="Event" ng-show="StopEvent">
+            <button type="button" class="btn btn-default" ng-click="closeEvent()">Pause Game</button>
+        </div>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ResetQuestModal">Reset Game</button>
+        <!--<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ResetEmployee">Reset Employee's data</button>-->
+        <div class="NoOfEmployee">No of Participants: {{NoOfEmployee}}</div>
+    </div>
+
+    <div>
+    </div>
+    <div class="row">
+        <div class="col-md-8">
+            <div class="Notification question-block">
+                <div class="table-responsive">
+                    <table class="table table-bordered admin-table">
+                        <tr>
+                            <th width="5%">Zingo No.</th>
+                            <th>Question</th>
+                            <th width="15%">Duration (mins)</th>
+                            <th width="120px"></th>
+                        </tr>
+                        <tr ng-repeat="itemQuestion in eventList[0].event[currentEvent].questions" ng-class="{'clickedquestion': itemQuestion.isDisabled }">
+                            <td>{{itemQuestion.qno}}</td>
+                            <td>
+                                <input type="text" ng-value="itemQuestion.question" ng-model="itemQuestion.question" ng-blur="" class="form-control">
+                            </td>
+                            <td>
+                                <select class="form-control" ng-model="itemQuestion.duration">
+                                    <option value="30000">30 sec</option>
+                                    <option value="60000">1 min</option>
+                                    <option value="180000">3 min</option>
+                                    <option value="300000">5 min</option>
+                                    <option value="600000">10 min</option>
+                                    <option value="1200000">20 min</option>
+                                    <option value="1800000">30 min</option>
+                                </select>
+                            </td>
+                            <td class="QuestionSubmit">
+                                <button type="button" class="btn btn-primary"  ng-model="itemQuestion.isDisabled" ng-disabled="itemQuestion.isDisabled" ng-click="setQuestion(itemQuestion, $index)">Submit</button>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="right-tab-section">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a data-toggle="tab" data-target="#login_details">Login Details</a></li>
+                    <li><a data-toggle="tab" data-target="#winner_list">Winner lists</a></li>
+                    <!--<li>  <a>{{NoOfEmployee}}</a></li>-->
+                </ul>
+
+                <div class="tab-content">
+                    <div id="login_details" class="tab-pane fade in active">
+                        <div class="login-details-blk">
+                            <!--  <h3>Employee Login Details</h3> -->
+                            <div class="loadmsg" ng-if="loginDetails">Login Details should be appear here!</div>
+                            <div class="ticketDetails" ng-repeat="item in EmployeeDetails">
+                                <h4>{{item.name}}</h4>
+                                <span>{{item.email}}</span>
+                                <label class="ticketNum">{{item.myBoard}}</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="winner_list" class="tab-pane fade">
+                        <div class="loadmsg" ng-if="WinnerDetails">Winner's Details should be appear here!</div>
+                        <div class="winner-list-blk">
+                            <!-- <h3> Winner List</h3> -->
+                            <div class="winnerDetails" ng-repeat="item in RowOneData">
+                                <div class="leftCont">
+                                    <h4>{{item.name}}</h4>
+                                    <span>{{item.email}}</span></div>
+                                <div class="pull-right">
+                                    <label class="prize">{{item.rowOne}}</label>
+                                    <br>
+                                    <label class="timestamp">{{item.timestamp}}</label>
+                                </div>
+                            </div>
+                            <div class="winnerDetails" ng-repeat="item in RowTwoData">
+                                <div class="leftCont">
+                                    <h4>{{item.name}}</h4>
+                                    <span>{{item.email}}</span></div>
+                                <div class="pull-right">
+                                    <label class="prize">{{item.rowTwo}}</label>
+                                    <br>
+                                    <label class="timestamp">{{item.timestamp}}</label>
+                                </div>
+                            </div>
+                            <div class="winnerDetails" ng-repeat="item in RowThreeData">
+                                <div class="leftCont">
+                                    <h4>{{item.name}}</h4>
+                                    <span>{{item.email}}</span></div>
+                                <div class="pull-right">
+                                    <label class="prize">{{item.rowThree}}</label>
+                                    <br>
+                                    <label class="timestamp">{{item.timestamp}}</label>
+                                </div>
+                            </div>
+                            <div class="winnerDetails" ng-repeat="item in ColumOneData">
+                                <div class="leftCont">
+                                    <h4>{{item.name}}</h4>
+                                    <span>{{item.email}}</span></div>
+                                <div class="pull-right">
+                                    <label class="prize">{{item.colOne}}</label>
+                                    <br>
+                                    <label class="timestamp">{{item.timestamp}}</label>
+                                </div>
+                            </div>
+                            <div class="winnerDetails" ng-repeat="item in ColumTwoData">
+                                <div class="leftCont">
+                                    <h4>{{item.name}}</h4>
+                                    <span>{{item.email}}</span></div>
+                                <div class="pull-right">
+                                    <label class="prize">{{item.colTwo}}</label>
+                                    <br>
+                                    <label class="timestamp">{{item.timestamp}}</label>
+                                </div>
+                            </div>
+                            <div class="winnerDetails" ng-repeat="item in ColumThreeData">
+                                <div class="leftCont">
+                                    <h4>{{item.name}}</h4>
+                                    <span>{{item.email}}</span></div>
+                                <div class="pull-right">
+                                    <label class="prize">{{item.columThree}}</label>
+                                    <br>
+                                    <label class="timestamp">{{item.timestamp}}</label>
+                                </div>
+                            </div>
+                            <div class="winnerDetails" ng-repeat="item in FullHouseData">
+                                <div class="leftCont">
+                                    <h4>{{item.name}}</h4>
+                                    <span>{{item.email}}</span></div>
+                                <div class="pull-right">
+                                    <label class="prize">{{item.FullHouse}}</label>
+                                    <br>
+                                    <label class="timestamp">{{item.timestamp}}</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modalOverlay hide"></div>
+<div class="modal fade" id="ResetQuestModal" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Alert</h4>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to Reset the game questions?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" ng-click="ResetQuestions()" data-dismiss="modal">Yes</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="scripts/lib/custom.js"></script>

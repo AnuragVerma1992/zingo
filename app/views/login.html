@@ -1,0 +1,45 @@
+ <div class="wrapper">
+        <div class="svgImg-block">
+            <object class="dust-svgImg" type="image/svg+xml" data="images/galaxy-dust.svg">
+            </object>
+        </div>
+        <div class="svgImg-block">
+            <object class="dust-svgImg" type="image/svg+xml" data="images/zingo-balls.svg">
+            </object>
+        </div>
+        <div class="rays-container"><div id="rays"></div></div>
+        <div class="backColor"></div>
+        <div class="login-wrapper">
+            <div class="login-block">
+                <div class="login-layer">
+                    <div class="zingo-logoBlk">
+                        <img src="images/zingo-logo.png" alt="zingo-logo" title="zingo-logo" />
+                    </div>
+                    <div class="login-main-content">
+                        <div class="form-section">
+                            <form class="login-form" onsubmit="return ;" name="loginForm">
+                                <div class="form-group">
+                                    <input type="text" name="name" ng-model="userName" required="required" />
+                                    <label class="control-label" for="input">Employee Name</label><i class="bar"></i>
+                                </div>
+                                <div class="form-group">
+                                    <input type="email" name="email" ng-model="useremail" required="required" />
+                                    <label class="control-label" for="input">Corporate Email ID</label><i class="bar"></i>
+                                </div>
+                                <div class="form-group play-button">
+                                    <button class=""  id="loginSubmit"   ng-click="getUser(userName, useremail)" ng-disabled="!useremail || !userName">Play Now</button>
+                                </div>
+                            </form>
+                            <div class="login-footer">
+                                <div class="footer-img">
+                                    <img src="images/MediaiQDigital.png" alt="media-iQ" title="media-iQ" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script src="scripts/lib/custom.js"></script>    

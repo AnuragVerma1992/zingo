@@ -1,0 +1,323 @@
+  <div class="pyro" ng-if="FullHouseData.length > 0">
+    <div class="before"></div>
+    <div class="after"></div>
+  </div>
+
+<div class="wrapper">
+  <div class="svgImg-block">
+    <object class="dust-svgImg" type="image/svg+xml" data="images/galaxy-dust.svg">
+    </object>
+  </div>
+  <div class="svgImg-block">
+    <object class="dust-svgImg" type="image/svg+xml" data="images/zingo-balls.svg">
+    </object>
+  </div>
+ <div class="rays-container"><div id="rays"></div></div>
+  <div class="backColor"></div>
+  <section>
+    <main>
+      <div class="center-cont">
+        <div class="center-second-layer">
+          <div class="home-main-content">
+              <!--<div class="gameOver-block animated infinite pulse" ng-if="FullHouseData.length >= 2"> <h2>Game Over</h2> </div>-->
+              
+            <div class="col-md-4 left-mainBlock">
+              <div class="timer" ng-if="eventList[0].event[currentEvent].eventStart">
+                  <span ng-repeat="duration in quesDuration track by $index">
+
+                  <span ng-if="$index === quesDuration.length-1" ><timer countdown="duration" max-time-unit="'minute'" interval="1000" finish-callback="finishCallback()">{{hhours}}:{{mminutes}}:{{sseconds}}</timer></span>
+                  </span>
+                </div>
+                <div class="timer" ng-if="!eventList[0].event[currentEvent].eventStart">
+                  <span>
+                  <span>
+                 <timer countdown="0" max-time-unit="'minute'" interval="1000" finish-callback="finishCallback()">{{hhours}}:{{mminutes}}:{{sseconds}}</timer>
+                  </span>
+                  </span>
+                </div>
+              <div class="modalOverlay hide"></div>
+              <div class="left-block">
+                <div class="left-top-text question " ng-if="eventList[0].event[currentEvent].eventStart">
+                  <span ng-repeat="askedQuestions in questionsAsked">
+                      <span ng-if="$index === questionsAsked.length-1">
+                         <h3> {{eventList[0].event[currentEvent].questions[askedQuestions-1].question}}</h3>
+                      </span>
+                  </span>
+                </div>
+                <div class="left-top-text question " ng-if="!eventList[0].event[currentEvent].eventStart">
+                  <span>
+                      <span >
+                         <h3> Questions will appear here..</h3>
+                      </span>
+                  </span>
+                </div>
+                <hr>
+                <div class="footer-set">
+                  <label data-toggle="modal" data-target="#cpmpletedQuestionsModal"><i class="fa fa-question-circle-o" aria-hidden="true"></i> Completed Questions</label>
+                  <label data-toggle="modal" data-target="#instructionsModal"><i class="fa fa-info-circle" aria-hidden="true"></i> Instructions</label>
+                </div>
+                <div class="para-message text-info">
+                  <p>If the answer to this question is not there in your ticket, please wait for the next question. <span >  Important  : Do not Refresh the browser during the game, you might lose your board.   </span> </p>
+                </div>
+                <!-- Modal -->
+                <div class="modal fade" id="cpmpletedQuestionsModal" role="dialog">
+                  <div class="modal-dialog">
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Completed Questions</h4>
+                      </div>
+                      <div class="modal-body">
+                        <ol ng-if="eventList[0].event[currentEvent].eventStart">
+                          <li ng-repeat="askedQuestions in questionsAsked">
+                            {{eventList[0].event[currentEvent].questions[askedQuestions-1].question}}
+                          </li>
+                        </ol>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal fade" id="instructionsModal" role="dialog">
+                  <div class="modal-dialog">
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Instructions</h4>
+                      </div>
+                      <div class="modal-body">
+                        <ol>
+                          <li ng-repeat="instruction in instructions">
+                            {{instruction}}
+                          </li>
+                          <p> <b>Important  : Do not Refresh the browser during the game, you might lose your board. </b> </p>
+                        </ol>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 left-right-noSpace">
+              <div class="middle-block">
+                <div class="play-content">
+                  <div class="main-zingo-logo">
+                    <img src="images/zingo-logo.png" alt="zingo-logo" title="zingo-logo" />
+                  </div>
+                  <div class="WaitNote" ng-if="!eventList[0].event[currentEvent].eventStart">Please wait for the game to start!</div>
+                   <div class="game-progress" ng-if="gameOver"> <span>Game Over</span> </div>
+                  <div class="balls-group" ng-if="eventList[0].event[currentEvent].eventStart">
+                    <div class="game-progress" ng-if="showInProgress"> <span>Game Inprogress</span> </div>
+
+                    <div class="board-lock" ng-if="showLockedBoard && !showInProgress"> <span>Board Locked</span> </div>
+                    <div class="balls-inline">
+                      <div class="balls-block">
+                        <figure class="ball" id="{{matrix[0].status}}" ng-disabled='isDisable' ng-class="matrix[0].status" ng-click="SelecMatrixData(matrix[0])"><span class="shadow"></span><span class="second-round"></span><span class="third-round" ng-class="matrix[0].status"></span>
+                          <span class="fourth-round"><span class="circle-text">{{matrix[0].number}}</span></span>
+                        </figure>
+                      </div>
+                      <div class="balls-block">
+                        <figure class="ball" id="{{matrix[3].status}}" ng-disabled='isDisable' ng-class="matrix[3].status" ng-click="SelecMatrixData(matrix[3])"><span class="shadow"></span><span class="second-round"></span><span class="third-round" ng-class="matrix[3].status"></span>
+                          <span class="fourth-round"><span class="circle-text">{{matrix[3].number}}</span></span>
+                        </figure>
+                      </div>
+                      <div class="balls-block">
+                        <figure class="ball" id="{{matrix[6].status}}" ng-disabled='isDisable' ng-class="matrix[6].status" ng-click="SelecMatrixData(matrix[6])"><span class="shadow"></span><span class="second-round"></span><span class="third-round" ng-class="matrix[6].status"></span>
+                          <span class="fourth-round"><span class="circle-text">{{matrix[6].number}}</span></span>
+                        </figure>
+                      </div>
+                    </div>
+                    <div class="balls-inline">
+                      <div class="balls-block">
+                        <figure class="ball" id="{{matrix[1].status}}" ng-disabled='isDisable' ng-class="matrix[1].status" ng-click="SelecMatrixData(matrix[1])"><span class="shadow"></span><span class="second-round"></span><span class="third-round" ng-class="matrix[1].status"></span>
+                          <span class="fourth-round"><span class="circle-text">{{matrix[1].number}}</span></span>
+                        </figure>
+                      </div>
+                      <div class="balls-block">
+                        <figure class="ball" id="{{matrix[4].status}}" ng-disabled='isDisable' ng-class="matrix[4].status" ng-click="SelecMatrixData(matrix[4])"><span class="shadow"></span><span class="second-round"></span><span class="third-round" ng-class="matrix[4].status"></span>
+                          <span class="fourth-round"><span class="circle-text">{{matrix[4].number}}</span></span>
+                        </figure>
+                      </div>
+                      <div class="balls-block">
+                        <figure class="ball" id="{{matrix[7].status}}" ng-disabled='isDisable' ng-class="matrix[7].status" ng-click="SelecMatrixData(matrix[7])"><span class="shadow"></span><span class="second-round"></span><span class="third-round" ng-class="matrix[7].status"></span>
+                          <span class="fourth-round"><span class="circle-text">{{matrix[7].number}}</span></span>
+                        </figure>
+                      </div>
+                    </div>
+                    <div class="balls-inline">
+                      <div class="balls-block">
+                        <figure class="ball" id="{{matrix[2].status}}" ng-disabled='isDisable' ng-class="matrix[2].status" ng-click="SelecMatrixData(matrix[2])"><span class="shadow"></span><span class="second-round"></span><span class="third-round" ng-class="matrix[2].status"></span>
+                          <span class="fourth-round"><span class="circle-text">{{matrix[2].number}}</span></span>
+                        </figure>
+                      </div>
+                      <div class="balls-block">
+                        <figure class="ball" id="{{matrix[5].status}}" ng-disabled='isDisable' ng-class="matrix[5].status" ng-click="SelecMatrixData(matrix[5])"><span class="shadow"></span><span class="second-round"></span><span class="third-round" ng-class="matrix[5].status"></span>
+                          <span class="fourth-round"><span class="circle-text">{{matrix[5].number}}</span></span>
+                        </figure>
+                      </div>
+                      <div class="balls-block">
+                        <figure class="ball" id="{{matrix[8].status}}" ng-disabled='isDisable' ng-class="matrix[8].status" ng-click="SelecMatrixData(matrix[8])"><span class="shadow"></span><span class="second-round"></span><span class="third-round" ng-class="matrix[8].status"></span>
+                          <span class="fourth-round"><span class="circle-text">{{matrix[8].number}}</span></span>
+                        </figure>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="live-button"><i ng-if="eventList[0].event[currentEvent].eventStart" class="fa fa-circle" aria-hidden="true"></i> <span>Live</span></div>
+                </div>
+            </div>
+            <div class="col-md-4 noSpace-around">
+              <div class="right-block">
+                <div class="announcement-text animated infinite pulse">
+                  <h3>{{note}}</h3>
+                </div>
+                <div class="winner-list">
+                  <h3>Winner List</h3>
+                  <span ng-click="listToggle()" class="glyphicon glyphicon-th pull-right table-list" aria-hidden="true"></span>
+                </div>
+                <div class="clearfix"></div>
+                <div class="right-list-content">
+                  <div class="loadingmsg" ng-if="!eventList[0].event[currentEvent].eventStart">Winner list appear here!</div>
+                  <div class="media-cont testing" ng-show="mediaWinnerList">
+                    <div class="media" ng-repeat="item in FullHouseData | limitTo:2" >
+                      <div class="media-body">
+                        <h4 class="media-heading">{{item.name}}</h4>
+                        <p>{{item.email}}</p>
+                        <br>
+                        <span>{{item.FullHouse}}</span>
+                        <p>{{item.timestamp}}</p>
+                      </div>
+                    </div>
+                    <div class="media" ng-repeat="item in RowOneData | limitTo:2">
+                      <div class="media-body">
+                        <h4 class="media-heading">{{item.name}}</h4>
+                        <p>{{item.email}}</p>
+                        <br>
+                        <span>{{item.rowOne}}</span>
+                        <p>{{item.timestamp}}</p>
+                      </div>
+                    </div>
+                    <div class="media" ng-repeat="item in RowTwoData | limitTo:2">
+                      <div class="media-body">
+                        <h4 class="media-heading">{{item.name}}</h4>
+                        <p>{{item.email}}</p>
+                        <br>
+                        <span>{{item.rowTwo}}</span>
+                        <p>{{item.timestamp}}</p>
+                      </div>
+                    </div>
+                    <div class="media" ng-repeat="item in RowThreeData | limitTo:2" >
+                      <div class="media-body">
+                        <h4 class="media-heading">{{item.name}}</h4>
+                        <p>{{item.email}}</p>
+                        <br>
+                        <span>{{item.rowThree}}</span>
+                        <p>{{item.timestamp}}</p>
+                      </div>
+                    </div>
+                    <div class="media" ng-repeat="item in ColumOneData | limitTo:2">
+                      <div class="media-body">
+                        <h4 class="media-heading">{{item.name}}</h4>
+                        <p>{{item.email}}</p>
+                        <br>
+                        <span>{{item.colOne}}</span>
+                        <p>{{item.timestamp}}</p>
+                      </div>
+                    </div>
+                    <div class="media" ng-repeat="item in ColumTwoData | limitTo:2">
+                      <div class="media-body">
+                        <h4 class="media-heading">{{item.name}}</h4>
+                        <p>{{item.email}}</p>
+                        <br>
+                        <span>{{item.colTwo}}</span>
+                        <p>{{item.timestamp}}</p>
+                      </div>
+                    </div>
+                    <div class="media" ng-repeat="item in ColumThreeData | limitTo:2">
+                      <div class="media-body">
+                        <h4 class="media-heading">{{item.name}}</h4>
+                        <p>{{item.email}}</p>
+                        <br>
+                        <span>{{item.columThree}}</span>
+                        <p>{{item.timestamp}}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="winner-table" ng-show="winnerTable">
+                    <table border="1">
+                      <tbody>
+                        <tr>
+                          <td>
+                            <b>First Column</b>
+                            <span ng-repeat="data in ColumOneData  | limitTo:2">
+                              <span>{{data.name}}</span>
+                            </span>
+                          </td>
+                          <td>
+                            <b>Second Column</b>
+                            <span ng-repeat="data in ColumTwoData  | limitTo:2">
+                              <span>{{data.name}}</span>
+                            </span>
+                          </td>
+                          <td>
+                            <b>Third Column</b>
+                            <span ng-repeat="data in ColumThreeData  | limitTo:2">
+                              <span>{{data.name}}</span>
+                            </span>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <b>First Row</b>
+                            <span ng-repeat="data in RowOneData  | limitTo:2">
+                              <span>{{data.name}}</span>
+                            </span>
+                          </td>
+                          <td>
+                            <b>Second Row</b>
+                            <span ng-repeat="data in RowTwoData  | limitTo:2">
+                              <span>{{data.name}}</span>
+                            </span>
+                          </td>
+                          <td>
+                            <b>Third Row</b>
+                            <span ng-repeat="data in RowThreeData  | limitTo:2">
+                              <span>{{data.name}}</span>
+                            </span>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td colspan="3">
+                            <b>Full House</b>
+                            <span ng-repeat="data in FullHouseData  | limitTo:3">
+                              <span>{{data.name}}</span>
+                            </span>
+                          </td>
+                        </tr>
+                      </tbody>
+                      </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="mediaiq-logo-bottom">
+                  <img src="../images/Mediaiq-white.png" alt="" title="" />
+                </div>
+        </div>
+    </main>
+  </section>
+  </div>
+
+  <!--<style>
+    canvas {display: block;
+      position:absolute;
+      top:0px;
+      left:50%;
+      z-index: 10;
+      margin-left:-450px; background:transparent;
+    }
+  </style>
+  <canvas id="canvas"></canvas>-->
+  <script src="scripts/lib/custom.js"></script>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Zingo</title>
+  <!--<base href="/">-->
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+  <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+  <!-- build:css(.) styles/vendor.css -->
+  <!-- bower:css -->
+  <link rel="stylesheet" href="bower_components/bootstrap-css/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="bower_components/angular-block-ui/dist/angular-block-ui.css" />
+  <link rel="stylesheet" href="bower_components/angular-loading-bar/build/loading-bar.css" />
+  <link rel="stylesheet" href="bower_components/angular-typewrite/dist/angular-typewrite.css" />
+  <!-- endbower -->
+  <!-- endbuild -->
+  <!-- build:css(.tmp) styles/main.css -->
+  <link rel="stylesheet" href="styles/animate.css">
+  <link rel="stylesheet" href="styles/main.css">
+  <!-- endbuild -->
+</head>
+
+<body ng-app="anurajProjectsApp">
+  <!--[if lte IE 8]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+  <!-- Add your site or application content here -->
+  <!--<div class="header">
+    <div class="navbar navbar-default" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#js-navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+          <a class="navbar-brand" href="#!/"><img src="images/zingo.png" class="logo"></a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="js-navbar-collapse">
+
+          <ul class="nav navbar-nav">
+            <li><a href="#!/login">Login</a></li>
+            <li><a href="#!/game">Game</a></li>
+            <li><a ng-href="#!/admin">Admin</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>-->
+
+
+  <div ng-view=""></div>
+
+
+  <!--<div class="footer">
+    <div class="container">
+      <p><span class="glyphicon glyphicon-heart"></span> from the Zool team</p>
+    </div>
+  </div>-->
+
+
+  <!-- build:js(.) scripts/vendor.js -->
+  <!-- bower:js -->
+  <script src="bower_components/jquery/dist/jquery.js"></script>
+  <script src="bower_components/angular/angular.js"></script>
+  <script src="bower_components/angular-animate/angular-animate.js"></script>
+  <script src="bower_components/angular-aria/angular-aria.js"></script>
+  <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+  <script src="bower_components/angular-messages/angular-messages.js"></script>
+  <script src="bower_components/angular-resource/angular-resource.js"></script>
+  <script src="bower_components/angular-route/angular-route.js"></script>
+  <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+  <script src="bower_components/angular-touch/angular-touch.js"></script>
+  <script src="bower_components/bootstrap-css/js/bootstrap.min.js"></script>
+  <script src="bower_components/a0-angular-storage/dist/angular-storage.js"></script>
+  <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+  <script src="bower_components/angular-block-ui/dist/angular-block-ui.js"></script>
+  <script src="bower_components/angular-loading-bar/build/loading-bar.js"></script>
+  <script src="bower_components/angular-typewrite/dist/angular-typewrite.js"></script>
+  <script src="bower_components/progressbar.js/dist/progressbar.js"></script>
+  <script src="bower_components/angular-progressbar/angular-progressbar.js"></script>
+  <!-- endbower -->
+  <!-- endbuild -->
+
+
+
+
+  <!-- build:js({.tmp,app}) scripts/scripts.js -->
+  <script src="scripts/lib/firebase.js"></script>
+  <script src="scripts/lib/angularfire.min.js"></script>
+  <script src="scripts/lib/angular-timer.js"></script>
+
+  <script src="scripts/lib/humanize-duration.js"></script>
+
+  <script src="scripts/lib/moment.js"></script>
+  <script src="scripts/app.js"></script>
+  <script src="scripts/controllers/login.js"></script>
+  <script src="scripts/controllers/game.js"></script>
+  <script src="scripts/controllers/admin.js"></script>
+
+  <!-- endbuild -->
+
+  <script>
+    // Initialize the Firebase SDK
+    var config = {
+      apiKey: "AIzaSyDbOAsWDzgshtPrZfbJRqiWKJZaKtcMwz4",
+      authDomain: "zingo-60646.firebaseapp.com",
+      databaseURL: "https://zingo-60646.firebaseio.com",
+      projectId: "zingo-60646",
+      storageBucket: "zingo-60646.appspot.com",
+      messagingSenderId: "826784197208"
+    };
+    firebase.initializeApp(config);
+  </script>
+</body>
+
+</html>
